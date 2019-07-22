@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-export default class App extends Component {
-  static propTypes = {
-    prop: PropTypes
-  };
+import MoviesContainer from "./MoviesContainer/MoviesContainer";
+import FilterContainer from "./FilterContainer/FilterContainer";
 
-  checkApi = () => {
-    console.log("check if api");
-  };
-  render() {
-    return (
-      <div>
-        <h1>
-          <button onClick={this.checkApi}>check api</button>
-        </h1>
-      </div>
-    );
-  }
+import { Container, GlobalStyle } from "./style.js";
+
+export default function App() {
+  return (
+    <Container className="app">
+      <GlobalStyle />
+      <Router>
+        <Route exact path="/" component={FilterContainer} />
+        <Route path="/movies" component={MoviesContainer} />
+      </Router>
+    </Container>
+  );
 }
