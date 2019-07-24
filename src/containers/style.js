@@ -13,3 +13,8 @@ export const Container = styled.div`
   width: 100%;
   background: #d0dde7;
 `;
+
+export const SecondaryContainer = styled.div`
+  display: flex;
+  flex-direction: ${props => (props.filters ? "row" : "column")};
+`;

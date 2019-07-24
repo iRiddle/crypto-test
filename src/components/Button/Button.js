@@ -1,22 +1,19 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const Button = props => {
-  console.log(props);
-  return <button >ds</button>;
+const Button = ({ value, placeholder }) => {
+  return <ButtonStyled placeholder={placeholder}>{value}</ButtonStyled>;
 };
 
-const ButtonStyled = styled(Button)`
-  display: flex;
-
+const ButtonStyled = styled.button`
   background: ${props => (props.primary ? "palevioletred" : "white")};
   color: ${props => (props.primary ? "white" : "palevioletred")};
-
   font-size: 1em;
-  margin: 1em;
+  margin: 0.5em;
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
+  cursor: pointer
 `;
 
-export default ButtonStyled;
+export default Button;
