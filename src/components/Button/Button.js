@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({ value, placeholder }) => {
-  return <ButtonStyled placeholder={placeholder}>{value}</ButtonStyled>;
+const Button = ({ value, placeholder, onClick }) => {
+  return (
+    <ButtonStyled placeholder={placeholder} onClick={onClick}>
+      {value}
+    </ButtonStyled>
+  );
 };
 
 const ButtonStyled = styled.button`
@@ -13,7 +17,7 @@ const ButtonStyled = styled.button`
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
-  cursor: pointer
+  cursor: pointer;
 `;
 
 export default Button;
