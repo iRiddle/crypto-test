@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 import { GET_GENRES_TRIGGER } from "../constants/getGenresConstants";
 import { AXIOS } from "../api";
 

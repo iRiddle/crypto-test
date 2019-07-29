@@ -10,8 +10,8 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Container = styled.div`
   dispaly: flex;
-  width: 100%;
   background: #d0dde7;
+  margin: ${props => (props.isFilter ? "25vh 0" : "none")};
 `;
 
 export const SecondaryContainer = styled.div`

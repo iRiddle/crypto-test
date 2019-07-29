@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import Select from "react-select";
+
 import { getGenresTrigger } from "../../core/actions/getGenresAction";
 
 import { getGenresSelector } from "../../core/selectors/getGenresSelector";
@@ -10,71 +12,63 @@ import { getGenresSelector } from "../../core/selectors/getGenresSelector";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import TextInput from "../../components/TextInput/TextInput";
-import { TitleH1, TitleH2, TitleCard } from "../../components/Title/Title";
+import { TitleH1, TitleCard } from "../../components/Title/Title";
+import InputRangeComponent from "../../components/InputRange";
 
 import { Container, SecondaryContainer } from "../style.js";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
+const FilterContainer = ({ getGenresTrigger, genres }) => {
+  const [selectedOption, handleChangeGenre] = useState("");
+  const [rangeValue, handleChangeRate] = useState({ min: 2, max: 8 });
 
-class FilterContainer extends React.Component {
-  // const dispatch = useDispatch();
+  useEffect(() => {
+    getGenresTrigger();
+  }, []);
 
-  // useEffect(() => {
-  //   getGenresAction();
-  //   // fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=5fcdb863130c33d2cb8f1612b76cbd30&language=en-US')
-  // });
-  state = {
-    selectedOption: null
+  const selectGenre = selectedOption => {
+    handleChangeGenre(selectedOption);
   };
 
-  handleChange = selectedOption => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+  const selectRate = selectedOption => {
+    handleChangeRate(selectedOption);
   };
-  componentDidMount() {
-    this.props.getGenresTrigger();
-  }
-  render() {
-    const { selectedOption } = this.state;
 
-    console.log(this.props.genres);
-    return (
-      <Container>
-        <TitleH1 title="Фильтры" />
-        <SecondaryContainer>
-          <TextInput placeholder="Введите название фильма" />
-        </SecondaryContainer>
-        <SecondaryContainer filters>
-          <Card>
-            <TitleCard title="Фильтр по жанру" />
-            <Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={options}
-              isMulti={true}
-            />
-          </Card>
-          <Card>
-            <TitleCard title="Фильтр по рейтингу" />
-          </Card>
-          <Card>
-            <TitleCard title="Фильтр по году" />
-          </Card>
-        </SecondaryContainer>
-        <SecondaryContainer>
-          <Button primary value="Применить фильтры" placeholder="lala" />
-        </SecondaryContainer>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container isFilter>
+      <TitleH1 title="Фильтры" />
+      <SecondaryContainer>
+        <TextInput placeholder="Введите название фильма" />
+      </SecondaryContainer>
+      <SecondaryContainer filters>
+        <Card>
+          <TitleCard title="Фильтр по жанру" />
+          <Select
+            value={selectedOption}
+            onChange={selectGenre}
+            options={genres.map(item => {
+              return { id: item.id, value: item.name, label: item.name };
+            })}
+            placeholder="Выберите жанр"
+            isMulti={true}
+          />
+        </Card>
+        <Card>
+          <TitleCard title="Фильтр по рейтингу" />
+          <InputRangeComponent value={rangeValue} selectRate={selectRate} />
+        </Card>
+        <Card>
+          <TitleCard title="Фильтр по году" />
+        </Card>
+      </SecondaryContainer>
+      <SecondaryContainer>
+        <Button primary value="Применить фильтры" placeholder="lala" />
+      </SecondaryContainer>
+    </Container>
+  );
+};
 
 const mapStateToProps = state => ({
-  genres: state.genres
+  genres: getGenresSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
