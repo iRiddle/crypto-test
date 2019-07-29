@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
-import watchFetchGenres from "./actions/getGenresAction";
+import watchFetchGenres from "./saga/getGenresSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 

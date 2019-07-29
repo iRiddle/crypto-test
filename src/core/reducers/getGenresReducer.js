@@ -4,10 +4,9 @@ import {
   GET_GENRES_PENDING,
   GET_GENRES_FULFILLED,
   GET_GENRES_REJECTED
-} from "../actions/getGenresAction";
+} from "../constants/getGenresConstants";
 
 const isFetching = (state = false, action) => {
-  console.log(action)
   switch (action.type) {
     case GET_GENRES_REJECTED:
     case GET_GENRES_FULFILLED:
@@ -22,7 +21,7 @@ const isFetching = (state = false, action) => {
 const error = (state = "", action) => {
   switch (action.type) {
     case GET_GENRES_REJECTED:
-      return action.payload;
+      return action.error;
     default:
       return state;
   }
@@ -31,7 +30,7 @@ const error = (state = "", action) => {
 const genres = (state = [], action) => {
   switch (action.type) {
     case GET_GENRES_FULFILLED:
-      return action.payload;
+      return action.data;
     default:
       return state;
   }

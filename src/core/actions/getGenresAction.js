@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { AXIOS } from "../api";
 
 import { takeLatest, put, call } from "redux-saga/effects";
@@ -5,6 +6,14 @@ import { takeLatest, put, call } from "redux-saga/effects";
 export const GET_GENRES_PENDING = "GENRES::GET_GENRES_PENDING";
 export const GET_GENRES_FULFILLED = "GENRES::GET_GENRES_FULFILLED";
 export const GET_GENRES_REJECTED = "GENRES::GET_GENRES_REJECTED";
+=======
+import {
+  GET_GENRES_PENDING,
+  GET_GENRES_FULFILLED,
+  GET_GENRES_REJECTED,
+  GET_GENRES_TRIGGER
+} from "../constants/getGenresConstants";
+>>>>>>> 4b991128458b20967247e60b1a23625f6450463e
 
 export const getGenresPending = () => ({
   type: GET_GENRES_PENDING
@@ -12,14 +21,15 @@ export const getGenresPending = () => ({
 
 export const getGenresFulfilled = data => ({
   type: GET_GENRES_FULFILLED,
-  payload: data
+  data
 });
 
 export const getGenresRejected = error => ({
   type: GET_GENRES_REJECTED,
-  payload: error
+  error
 });
 
+<<<<<<< HEAD
 export function* getGenresAction() {
   try {
     yield put(getGenresPending());
@@ -39,3 +49,8 @@ export function* getGenresAction() {
 export default function* watchFetchGenres() {
   yield takeLatest("FETCHED_GENRES", getGenresAction);
 }
+=======
+export const getGenresTrigger = () => ({
+  type: GET_GENRES_TRIGGER
+});
+>>>>>>> 4b991128458b20967247e60b1a23625f6450463e
