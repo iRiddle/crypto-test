@@ -1,6 +1,6 @@
 import { AXIOS } from "../api";
 
-import { takeEvery, takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 
 export const GET_GENRES_PENDING = "GENRES::GET_GENRES_PENDING";
 export const GET_GENRES_FULFILLED = "GENRES::GET_GENRES_FULFILLED";
@@ -30,7 +30,6 @@ export function* getGenresAction() {
         console.log(response);
       });
     });
-    console.log(data);
     yield put(getGenresFulfilled(data));
   } catch (error) {
     yield put(getGenresRejected(error));

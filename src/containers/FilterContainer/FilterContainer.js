@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useSelector, useDispatch, connect } from "react-redux";
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import watchFetchGenres from "../../core/actions/getGenresAction";
@@ -50,7 +50,7 @@ class FilterContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  genres: state
+  genres: state.genres
 });
 
 const mapDispatchToProps = dispatch =>
