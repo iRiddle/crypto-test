@@ -4,6 +4,7 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -22,11 +23,11 @@ import { Container, SecondaryContainer } from "../style.js";
 
 import { arrayYearsFilter } from "../../core/utils";
 
-const FilterContainer = ({ applyFilters, getGenresTrigger, genres }) => {
-  const [selectedOption, handleChangeGenre] = useState("");
-  const [selectedOptionYear, handleChangeYear] = useState("");
+const FilterContainer = ({ applyFilters, getGenresTrigger, genres, history }) => {
   const [years] = useState(arrayYearsFilter);
-  const [rangeValue, handleChangeRate] = useState([2, 8]);
+  const [selectedOptionGenre, handleChangeGenre] = useState("");
+  const [selectedOptionYear, handleChangeYear] = useState("");
+  const [rangeValue, handleChangeRate] = useState([0, 10]);
   const [movieName, handleChangeMovieName] = useState("");
 
   useEffect(() => {
@@ -62,15 +63,14 @@ const FilterContainer = ({ applyFilters, getGenresTrigger, genres }) => {
     }
 
     const filters = {
-      selectedOption,
+      selectedOptionGenre,
       rangeValue,
       selectedOptionYear,
       movieName
     };
 
     applyFilters(filters);
-
-    console.log(selectedOption, rangeValue, selectedOptionYear, movieName);
+    history.push('/movies')
   };
 
   return (
@@ -87,7 +87,7 @@ const FilterContainer = ({ applyFilters, getGenresTrigger, genres }) => {
         <Card>
           <TitleCard title="Фильтр по жанру" />
           <Select
-            value={selectedOption}
+            value={selectedOptionGenre}
             onChange={selectGenre}
             options={genres.map(item => {
               return { id: item.id, value: item.name, label: item.name };
@@ -107,7 +107,6 @@ const FilterContainer = ({ applyFilters, getGenresTrigger, genres }) => {
             onChange={selectYear}
             options={years}
             placeholder="Выберите год"
-            isMulti={true}
           />
         </Card>
       </SecondaryContainer>
@@ -139,4 +138,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FilterContainer);
+)(withRouter(FilterContainer));

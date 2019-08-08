@@ -1,19 +1,38 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { filtersSelector } from "../core/selectors/appliedFiltersSelector";
 
 import MoviesContainer from "./MoviesContainer/MoviesContainer";
 import FilterContainer from "./FilterContainer/FilterContainer";
 
 import { Container, GlobalStyle } from "./style.js";
 
-export default function App() {
+const isEmpty = require("lodash/isEmpty");
+
+const App = ({ filters }) => {
   return (
-    <Container className="app">
+    <Container>
       <GlobalStyle />
       <Router>
         <Route exact path="/" component={FilterContainer} />
-        <Route path="/movies" component={MoviesContainer} />
+        <Route
+          path="/movies"
+          render={() =>
+            !isEmpty(filters) ? <MoviesContainer /> : <Redirect to="/" />
+          }
+        />
       </Router>
     </Container>
   );
-}
+};
+
+const mapStateToProps = state => ({
+  filters: filtersSelector(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(App);

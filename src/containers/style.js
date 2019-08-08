@@ -9,8 +9,10 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  dispaly: flex;
-  background: #d0dde7;
+  display: ${props => props.isHeader && "flex"};
+  flex-direction: ${props => props.isHeader && "row"};
+  justify-content: ${props => props.isHeader && "space-around"};
+  background: #d0dde7
   margin: ${props => (props.isFilter ? "25vh 0" : "none")};
 `;
 
