@@ -6,20 +6,20 @@ export const filtersSelector = store => store.filters;
 
 export const getFilterMovieSelector = createSelector(
   filtersSelector,
-  g => get(g, "movieName", "")
+  g => get(g, "title", "")
 );
 
 export const getFilterGenreSelector = createSelector(
   filtersSelector,
-  g => get(g, "selectedOptionGenre", [])
+  g => get(g, "genres", [])
 );
 
 export const getFilterRangeSelector = createSelector(
   filtersSelector,
-  g => get(g, "rangeValue", [])
+  g => get(g, "rate", [])
 );
 
 export const getFilterYearSelector = createSelector(
   filtersSelector,
-  g => get(g, "selectedOptionYear.value", "")
+  g => get(g, "year.value", "")
 );

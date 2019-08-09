@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const FilterSticker = ({ title }) => {
-  console.log(title)
   return Array.isArray(title) ? (
     <StickerArrayStyled>
       {title.map(item => (

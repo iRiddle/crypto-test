@@ -5,6 +5,12 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    overflow: auto !important;
+    position: relative !important
+  },
+  html {
+    height: 100%;
+    width: 100%;
   }
 `;
 

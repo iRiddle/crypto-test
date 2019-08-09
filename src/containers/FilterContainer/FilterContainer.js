@@ -17,15 +17,20 @@ import { TitleH1, TitleCard } from "../../components/Title/Title";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import TextInput from "../../components/TextInput/TextInput";
-import InputRangeComponent from "../../components/InputRange";
+import InputRangeComponent from "../../components/InputRange/InputRange";
 
 import { Container, SecondaryContainer } from "../style.js";
 
 import { arrayYearsFilter } from "../../core/utils";
 
-const FilterContainer = ({ applyFilters, getGenresTrigger, genres, history }) => {
+const FilterContainer = ({
+  applyFilters,
+  getGenresTrigger,
+  genres,
+  history
+}) => {
   const [years] = useState(arrayYearsFilter);
-  const [selectedOptionGenre, handleChangeGenre] = useState("");
+  const [selectedOptionGenre, handleChangeGenre] = useState([]);
   const [selectedOptionYear, handleChangeYear] = useState("");
   const [rangeValue, handleChangeRate] = useState([0, 10]);
   const [movieName, handleChangeMovieName] = useState("");
@@ -51,6 +56,12 @@ const FilterContainer = ({ applyFilters, getGenresTrigger, genres, history }) =>
   };
 
   const onClick = () => {
+    let filters = {
+      genres: [],
+      rate: [],
+      year: {},
+      title: ""
+    };
     if (!movieName) {
       return toast.error("Введите название фильма", {
         position: "top-right",
@@ -62,15 +73,15 @@ const FilterContainer = ({ applyFilters, getGenresTrigger, genres, history }) =>
       });
     }
 
-    const filters = {
-      selectedOptionGenre,
-      rangeValue,
-      selectedOptionYear,
-      movieName
+    filters = {
+      genres: selectedOptionGenre,
+      rate: rangeValue,
+      year: selectedOptionYear,
+      title: movieName
     };
 
     applyFilters(filters);
-    history.push('/movies')
+    history.push("/movies");
   };
 
   return (

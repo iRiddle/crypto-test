@@ -13,18 +13,20 @@ const isEmpty = require("lodash/isEmpty");
 
 const App = ({ filters }) => {
   return (
-    <Container>
+    <>
       <GlobalStyle />
-      <Router>
-        <Route exact path="/" component={FilterContainer} />
-        <Route
-          path="/movies"
-          render={() =>
-            !isEmpty(filters) ? <MoviesContainer /> : <Redirect to="/" />
-          }
-        />
-      </Router>
-    </Container>
+      <Container>
+        <Router>
+          <Route exact path="/" component={FilterContainer} />
+          <Route
+            path="/movies"
+            render={() =>
+              !isEmpty(filters) ? <MoviesContainer /> : <Redirect to="/" />
+            }
+          />
+        </Router>
+      </Container>
+    </>
   );
 };
 
