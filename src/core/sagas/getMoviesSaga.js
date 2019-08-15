@@ -14,7 +14,7 @@ export function* getMoviesAction(action) {
   try {
     yield put(getMoviesPending());
     const response = yield call(() => {
-      return AXIOS.get(`/search/movie?query=${filterMovie}&year=${filterYear}`);
+      return AXIOS.get(`/search/movie?query=${filterMovie}&primary_release_year=${filterYear}`);
     });
     yield put(getMoviesFulfilled(response.data));
   } catch (error) {

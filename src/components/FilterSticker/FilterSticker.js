@@ -5,7 +5,9 @@ const FilterSticker = ({ title }) => {
   return Array.isArray(title) ? (
     <StickerArrayStyled>
       {title.map(item => (
-        <StickerStyled>{item.value || item}</StickerStyled>
+        <StickerStyled key={item.value || item}>
+          {item.value || item}
+        </StickerStyled>
       ))}
     </StickerArrayStyled>
   ) : (

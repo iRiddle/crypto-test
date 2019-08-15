@@ -1,24 +1,43 @@
 import React from "react";
+import { format } from "date-fns";
+
 import styled from "styled-components";
 
 import favoriteStar from "../../static/icons/-favourite-star.svg";
 
-const MovieCard = ({ title, overview, rate, releaseDate }) => {
+var ruLocale = require("date-fns/locale/ru");
+
+const MovieCard = ({ title, overview, rate, releaseDate, onClick, id }) => {
+  const isAddedToStorage = id => {
+    let viewedMovies = JSON.parse(localStorage.getItem("viewedMoviesArray"));
+    if (viewedMovies === null) {
+      return false;
+    } else {
+      if (viewedMovies.some(movie => movie === id)) return true;
+    }
+    return false;
+  };
+
   return (
     <ContainerMovieStyled>
-      <LabelMovieStyled title>{title}</LabelMovieStyled>
+      <LabelMovieStyled title>
+        <div>{title}</div>
+        {isAddedToStorage(id) && <span class="dot" title="Просмотрено" />}
+      </LabelMovieStyled>
       <LabelMovieStyled overview>{overview}</LabelMovieStyled>
       <LabelMovieStyled rate>
-        Рейтинг:
+        Рейтинг: {' '}
         {rate}
         <img src={favoriteStar} width="20px" height="20px" alt="star" />
       </LabelMovieStyled>
 
-      <LabelMovieStyled>Год: {releaseDate}</LabelMovieStyled>
+      <LabelMovieStyled>
+        Дата: {format(releaseDate, "DD MMMM YYYY", { locale: ruLocale })}
+      </LabelMovieStyled>
 
-      <LabelMoreStyled>
-        <span>Подробнее</span>
-      </LabelMoreStyled>
+      <ButtonMoreStyled onClick={onClick} primary>
+        Подробнее
+      </ButtonMoreStyled>
     </ContainerMovieStyled>
   );
 };
@@ -39,21 +58,38 @@ const ContainerMovieStyled = styled.div`
 `;
 
 const LabelMovieStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: ${props => props.title && "2rem"};
   text-align: ${props => props.overview && "justify"};
   margin-top: 8px;
   cursor: pointer;
-`;
-
-const LabelMoreStyled = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  
+  div {
+    max-width: 60%;
+  }
 
   span {
-    text-decoration: underline;
-    cursor: pointer;
-    color: #de8927;
+    height: 15px;
+    width: 15px;
+    background-color: #00bf63;
+    border-radius: 50%;
+    display: inline-block;
+    align-self: center;
+    border: 0.5px solid #000000
   }
+`;
+
+const ButtonMoreStyled = styled.div`
+  background: ${props => (props.primary ? "palevioletred" : "white")};
+  color: ${props => (props.primary ? "white" : "palevioletred")};
+
+  font-size: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  margin-top: 8px;
+  border-radius: 3px;
+  cursor: pointer;
 `;
 
 export default MovieCard;
